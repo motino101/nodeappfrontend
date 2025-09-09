@@ -1,0 +1,48 @@
+.edge {
+  pointer-events: none;
+}
+
+.edge-path {
+  filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
+  animation: dash-flow 6s linear infinite;
+}
+
+.edge-path.dragging {
+  stroke-dasharray: 6 3;
+  opacity: 0.7;
+  animation: dash-flow-fast 2s linear infinite;
+}
+
+@keyframes dash-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 24;
+  }
+}
+
+@keyframes dash-flow-fast {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 18;
+  }
+}
+
+.flow-dot {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.dot-1 {
+  opacity: 0.9;
+}
+
+.dot-2 {
+  opacity: 0.7;
+}
+
+.dot-3 {
+  opacity: 0.5;
+}
