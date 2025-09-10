@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Node from './components/Node';
 import Edge from './components/Edge';
+import NavBar from './components/NavBar';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         content: '',
         prompt: '',
         type: 'text',
+        nodeType: 'source', // Default to source for double-click creation
         isEditing: false,
         isPromptMode: false
       };
@@ -96,8 +98,43 @@ function App() {
     }, 100);
   }, []);
 
+  const addNodeAtCenter = useCallback((nodeType = 'source') => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const centerX = rect.width / 2 - 100; // Center the node
+    const centerY = rect.height / 2 - 50;
+    
+    const newNode = {
+      id: uuidv4(),
+      x: centerX,
+      y: centerY,
+      content: '',
+      prompt: '',
+      type: 'text',
+      nodeType: nodeType, // 'source' or 'output'
+      isEditing: false,
+      isPromptMode: false
+    };
+    
+    setNodes(prev => [...prev, newNode]);
+  }, []);
+
+  const handleAddSourceNode = useCallback(() => {
+    addNodeAtCenter('source');
+  }, [addNodeAtCenter]);
+
+  const handleAddOutputNode = useCallback(() => {
+    addNodeAtCenter('output');
+  }, [addNodeAtCenter]);
+
   return (
     <div className="app">
+      <NavBar 
+        onAddSourceNode={handleAddSourceNode}
+        onAddOutputNode={handleAddOutputNode}
+      />
       <div className="instructions">
         Double-click anywhere to create a new node • Drag from node borders to connect • Double-click nodes to edit
       </div>

@@ -237,7 +237,7 @@ const Node = ({
   return (
     <div
       ref={nodeRef}
-      className={`node ${isEmpty ? 'empty' : 'filled'} ${hasIncomingConnection ? 'connection-target' : ''} has-type-selector`}
+      className={`node ${isEmpty ? 'empty' : 'filled'} ${hasIncomingConnection ? 'connection-target' : ''} has-type-selector ${node.nodeType || 'source'}`}
       style={{
         left: node.x,
         top: node.y,
@@ -248,6 +248,11 @@ const Node = ({
       data-node-id={node.id}
     >
       <div className="node-type-header">
+        <div className="node-type-indicator">
+          <span className={`node-type-badge ${node.nodeType || 'source'}`}>
+            {node.nodeType === 'output' ? '🎯 Output' : '📝 Source'}
+          </span>
+        </div>
         <div className="node-type-selector">
           {['text', 'image', 'link', 'doc'].map(type => (
             <button

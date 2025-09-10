@@ -3,7 +3,7 @@
 }
 
 .edge-path {
-  filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
+  filter: drop-shadow(0 2px 4px rgba(255, 69, 0, 0.3));
   animation: dash-flow 6s linear infinite;
 }
 

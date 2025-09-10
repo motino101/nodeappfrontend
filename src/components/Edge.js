@@ -30,18 +30,17 @@ const Edge = ({ edge, nodes, isDragging = false }) => {
     }
   }, [isDragging]);
 
-  const getNodeCenter = (nodeId) => {
-    const node = nodes.find(n => n.id === nodeId);
+  const getNodeCenter = (node) => {
     if (!node) return { x: 0, y: 0 };
-    // All nodes now have type selector, so use 240px width
+    // All nodes have type selector now, so always 240px
     return {
-      x: node.x + 120, // Node width / 2 (240px / 2)
+      x: node.x + 120, // 240px / 2
       y: node.y + 50   // Node height / 2
     };
   };
 
   const getConnectionPoint = (sourceNode, targetNode) => {
-    // All nodes now have type selector, so use 240px width
+    // All nodes have type selector now, so always 240px
     const sourceCenter = { x: sourceNode.x + 120, y: sourceNode.y + 50 };
     const targetCenter = { x: targetNode.x + 120, y: targetNode.y + 50 };
     
@@ -54,20 +53,20 @@ const Edge = ({ edge, nodes, isDragging = false }) => {
     if (Math.abs(dx) > Math.abs(dy)) {
       // Horizontal connection
       if (dx > 0) {
-        // Connect from right edge of source (240px width, accounting for 2px border)
-        sourcePoint = { x: sourceNode.x + 238, y: sourceCenter.y };
+        // Connect from right edge of source (240px)
+        sourcePoint = { x: sourceNode.x + 240, y: sourceCenter.y };
       } else {
-        // Connect from left edge of source (accounting for border)
-        sourcePoint = { x: sourceNode.x + 2, y: sourceCenter.y };
+        // Connect from left edge of source
+        sourcePoint = { x: sourceNode.x, y: sourceCenter.y };
       }
     } else {
       // Vertical connection
       if (dy > 0) {
-        // Connect from bottom edge of source (100px height, accounting for 2px border)
-        sourcePoint = { x: sourceCenter.x, y: sourceNode.y + 98 };
+        // Connect from bottom edge of source
+        sourcePoint = { x: sourceCenter.x, y: sourceNode.y + 100 };
       } else {
-        // Connect from top edge of source (accounting for border)
-        sourcePoint = { x: sourceCenter.x, y: sourceNode.y + 2 };
+        // Connect from top edge of source
+        sourcePoint = { x: sourceCenter.x, y: sourceNode.y };
       }
     }
     
@@ -76,20 +75,20 @@ const Edge = ({ edge, nodes, isDragging = false }) => {
     if (Math.abs(dx) > Math.abs(dy)) {
       // Horizontal connection
       if (dx > 0) {
-        // Connect to left edge of target (accounting for border)
-        targetPoint = { x: targetNode.x + 2, y: targetCenter.y };
+        // Connect to left edge of target
+        targetPoint = { x: targetNode.x, y: targetCenter.y };
       } else {
-        // Connect to right edge of target (240px width, accounting for 2px border)
-        targetPoint = { x: targetNode.x + 238, y: targetCenter.y };
+        // Connect to right edge of target (240px)
+        targetPoint = { x: targetNode.x + 240, y: targetCenter.y };
       }
     } else {
       // Vertical connection
       if (dy > 0) {
-        // Connect to top edge of target (accounting for border)
-        targetPoint = { x: targetCenter.x, y: targetNode.y + 2 };
+        // Connect to top edge of target
+        targetPoint = { x: targetCenter.x, y: targetNode.y };
       } else {
-        // Connect to bottom edge of target (100px height, accounting for 2px border)
-        targetPoint = { x: targetCenter.x, y: targetNode.y + 98 };
+        // Connect to bottom edge of target
+        targetPoint = { x: targetCenter.x, y: targetNode.y + 100 };
       }
     }
     
@@ -204,25 +203,25 @@ const Edge = ({ edge, nodes, isDragging = false }) => {
         d={pathData}
         className={`edge-path ${isDragging ? 'dragging' : ''}`}
         fill="none"
-        stroke="#ff6b9d"
-        strokeWidth="3"
+        stroke="#ff4500"
+        strokeWidth="2"
         strokeDasharray="8 4"
         strokeLinecap="round"
       />
       {!isDragging && (
         <>
           {/* Flow animation dots */}
-          <circle className="flow-dot dot-1" r="3" fill="#ff6b9d">
+          <circle className="flow-dot dot-1" r="3" fill="#ff4500">
             <animateMotion dur="4s" repeatCount="indefinite">
               <mpath href={`#edge-${edge.id}`} />
             </animateMotion>
           </circle>
-          <circle className="flow-dot dot-2" r="2" fill="#f06292">
+          <circle className="flow-dot dot-2" r="2" fill="#ff4500">
             <animateMotion dur="4s" repeatCount="indefinite" begin="1s">
               <mpath href={`#edge-${edge.id}`} />
             </animateMotion>
           </circle>
-          <circle className="flow-dot dot-3" r="2" fill="#e91e63">
+          <circle className="flow-dot dot-3" r="2" fill="#ff4500">
             <animateMotion dur="4s" repeatCount="indefinite" begin="2s">
               <mpath href={`#edge-${edge.id}`} />
             </animateMotion>
@@ -234,7 +233,7 @@ const Edge = ({ edge, nodes, isDragging = false }) => {
         d={pathData}
         fill="none"
         stroke="transparent"
-        strokeWidth="1"
+        strokeWidth="2"
       />
     </g>
   );
